@@ -1,3 +1,9 @@
+
+.product-detail-price span{
+  color: red;
+}
+
+
 .product {
   margin: 0;
 }
