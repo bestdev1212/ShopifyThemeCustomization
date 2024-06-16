@@ -1,3 +1,7 @@
+.featured-product-image{
+  border: 1px solid gray;
+}
+
 @media screen and (max-width: 749px) {
   .collection .grid__item:only-child {
     flex: 0 0 100%;
