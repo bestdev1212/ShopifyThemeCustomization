@@ -77,6 +77,10 @@
               </div>
             {%- else -%}
               <div class="cart__ctas" {{ block.shopify_attributes }}>
+                <button type="button" id="clear-cart" class="cart__checkout-button button button--secondary">
+                  <span id="cart-clear-button-text" >Clear Cart</span>
+                  <div id="cart-clear-button-loading" class="lds-dual-ring" style="display: none;"></div>
+                </button>
                 <button
                   type="submit"
                   id="checkout"
@@ -104,7 +108,18 @@
     </div>
   </div>
 </div>
-
+<script>
+  
+  document.getElementById('clear-cart').addEventListener('click', function() {
+    document.getElementById('cart-clear-button-loading').style.display = 'block';
+  document.getElementById('cart-clear-button-text').style.display = 'none';
+    fetch('/cart/clear.js', { method: 'POST' })
+      .then(response => response.json())
+      .then(data => {
+        location.reload();
+      });
+  });
+</script>
 {% schema %}
 {
   "name": "t:sections.main-cart-footer.name",
