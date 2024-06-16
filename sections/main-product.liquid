@@ -131,26 +131,6 @@
                     {%- endform -%}
                   </div>
                 </div>
-                {%- if product.quantity_price_breaks_configured? -%}
-                  <div class="volume-pricing-note" id="Volume-Note-{{ section.id }}">
-                    <span>{{ 'products.product.volume_pricing.note' | t }}</span>
-                  </div>
-                {%- endif -%}
-                <div class="product__tax caption rte">
-                  {%- if cart.taxes_included -%}
-                    {{ 'products.product.include_taxes' | t }}
-                  {%- endif -%}
-                  {%- if shop.shipping_policy.body != blank -%}
-                    {{ 'products.product.shipping_policy_html' | t: link: shop.shipping_policy.url }}
-                  {%- endif -%}
-                </div>
-                <div {{ block.shopify_attributes }}>
-                  {%- assign product_form_installment_id = 'product-form-installment-' | append: section.id -%}
-                  {%- form 'product', product, id: product_form_installment_id, class: 'installment caption-large' -%}
-                    <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-                    {{ form | payment_terms }}
-                  {%- endform -%}
-                </div>
               {%- when 'inventory' -%}
                 <p
                   class="product__inventory{% if block.settings.text_style == 'uppercase' %} caption-with-letter-spacing{% elsif block.settings.text_style == 'subtitle' %} subtitle{% endif %}{% if product.selected_or_first_available_variant.inventory_management != 'shopify' %} visibility-hidden{% endif %}"
@@ -206,12 +186,8 @@
                     {%- endif -%}
                   {%- endif -%}
                 </p>
-              {%- when 'description' -%}
-                {%- if product.description != blank -%}
-                  <div class="product__description rte quick-add-hidden" {{ block.shopify_attributes }}>
-                    {{ product.description }}
-                  </div>
-                {%- endif -%}
+             
+             
               {%- when 'sku' -%}
                 <p
                   class="product__sku{% if block.settings.text_style == 'uppercase' %} caption-with-letter-spacing{% elsif block.settings.text_style == 'subtitle' %} subtitle{% endif %}{% if product.selected_or_first_available_variant.sku.size == 0 %} visibility-hidden{% endif %}"
@@ -482,6 +458,27 @@
                   section_id: section.id,
                   show_pickup_availability: true
                 -%}
+                {%- when 'description' -%}
+                  <div>
+                    <p>
+                      {{product.description}}
+                    </p>
+                    <p>
+                      {% if section.settings.product_extra_info != blank %}
+                        
+                        <div >
+                          <div class="product_extra_info-container">
+                            <div class="product_extra_info-content" id="product_extra_info-content">
+                              {{ section.settings.product_extra_info }}
+                            </div>
+                            <button id="product_extra_info-toggle-button" class="product_extra_info-toggle-button">Show More</button>
+                          </div>
+                          
+                        </div>
+                      {% endif %}
+                    </p>
+                  </div>
+                  
               {%- when 'rating' -%}
                 {%- if product.metafields.reviews.rating.value != blank -%}
                   <div class="rating-wrapper">
@@ -963,6 +960,7 @@
       "name": "t:sections.main-product.blocks.description.name",
       "limit": 1
     },
+   
     {
       "type": "share",
       "name": "t:sections.main-product.blocks.share.name",
@@ -2120,6 +2118,11 @@
     }
   ],
   "settings": [
+    {
+      "type": "richtext",
+      "id": "product_extra_info",
+      "label": "Product Extra Info"
+    },
     {
       "type": "checkbox",
       "id": "enable_sticky_info",

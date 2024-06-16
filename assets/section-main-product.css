@@ -1,4 +1,36 @@
 
+.product_extra_info-container {
+  position: relative;
+}
+
+.product_extra_info-content {
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.product_extra_info-content.collapsed {
+  max-height: 100px; /* Adjust the height as needed */
+}
+
+.product_extra_info-content.expanded {
+  max-height: none;
+}
+
+.product_extra_info-toggle-button {
+  display: none;
+  color: gray;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+  .product_extra_info-toggle-button {
+    display: inline-block;
+  }
+}
+
 .product-detail-price span{
   color: red;
 }

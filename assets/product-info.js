@@ -105,3 +105,25 @@ if (!customElements.get('product-info')) {
     }
   );
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+  const textContent = document.getElementById("product_extra_info-content");
+  const toggleButton = document.getElementById("product_extra_info-toggle-button");
+
+  toggleButton.addEventListener("click", function() {
+    if (textContent.classList.contains("collapsed")) {
+      textContent.classList.remove("collapsed");
+      textContent.classList.add("expanded");
+      toggleButton.textContent = "Show Less";
+    } else {
+      textContent.classList.remove("expanded");
+      textContent.classList.add("collapsed");
+      toggleButton.textContent = "Show More";
+    }
+  });
+
+  // Initialize the text content as collapsed on mobile
+  if (window.innerWidth <= 768) {
+    textContent.classList.add("collapsed");
+  }
+});
